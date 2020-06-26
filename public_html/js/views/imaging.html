@@ -1,0 +1,25 @@
+                            
+<oj-messages id="confirmMsg" on-oj-close="[[closeMessageHandler]]" messages="{{docConfirmMessages}}" class="eco-notification-confirmation" 
+             class="[[computedClasses]]"></oj-messages>
+<oj-messages id="errorMsg" on-oj-close="[[closeMessageHandler]]" messages="{{docErrorMessages}}" class="eco-notification-error"
+             class="[[computedClasses]]"></oj-messages>
+<div class="invheaderbg oj-hybrid-applayout-header">
+    <span class=""></span>
+     
+    <h4 class="head">Search: Invoice By Date</h4>
+</div>
+</br>
+        <oj-form-layout id="myform" label-edge="start" max-columns="1">
+            <oj-input-date id="Date" value="{{fromDate}}" converter="[[dateConverter]]"
+                           label-hint="From Document Creation Date"></oj-input-date>
+            <oj-input-date id="Date" value="{{toDate}}" converter="[[dateConverter]]"
+                           label-hint="To Document Creation Date"></oj-input-date>
+            <div id='buttons-container' class="oj-flex-item oj-dialog-footer">
+                <oj-button class="oj-button-primary" id='button1' on-oj-action='[[submit]]'>Go</oj-button>
+                 
+                <oj-button class="oj-button-primary" id='button1' on-oj-action='[[reset]]'>Reset</oj-button><!--   <oj-button class="oj-button-primary" id='button1' on-oj-action='[[check]]'>Check</oj-button>
+                                
+                                <oj-button class="oj-button-primary" id='notify' on-oj-action='[[notify]]'>Notify</oj-button>-->
+            </div>
+        </oj-form-layout>
+

@@ -53,64 +53,69 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'hammerjs', 'ojs/ojpagingdataprovide
                 console.log('To Date: '+self.toDate());
                 var fromActDate = new Date(self.fromDate()); 
                 var toActDate = new Date(self.toDate()); 
+                var raiseErr=false;
                 
                     if (fromActDate.getTime() < toActDate.getTime()) 
                         console.log("fromActDate is lesser than toActDate"); 
                     else if (fromActDate.getTime() > toActDate.getTime()) 
                     {
+                        raiseErr=true;
                         console.log("fromActDate is greater than toActDate"); 
-                        self.selectedMessagesE.push(["error"]);
+                                self.selectedMessagesE.push(["error"]);
                                 var isSelectedMessageShownE = self.docErrorMessages().find(function (item) {
                                     return item.severity === self.selectedMessagesE()
                                 });
                                 if (!isSelectedMessageShownE && self.docErrorMessages().length == 0) {
                                     self.docErrorMessages.push(self.createMessage('From Document Creation Date cannot be greater than To Document Creation Date', self.selectedMessagesE()[0]));
                                 }
+                                
+                                return;
                     }
                     else
                         console.log("both are equal"); 
-                        
+                      if(!raiseErr){  
                         var searchCriteriaData={};
                         
                         searchCriteriaData.search_name='InvoicesByDate';
                         searchCriteriaData.parameters=[{"param_name":"Document Creation Date","param_value":self.fromDate()},{"param_name":"Document Creation Date 1","param_value":self.toDate()}];
                         
                         console.log('Post Url: '+self.serviceURL + 'documents/exportDocuments');
-                 $.ajax({
-                        type: "POST", url: self.serviceURL + 'documents/exportDocuments', data: JSON.stringify(searchCriteriaData), contentType: "application/json", dataType: "JSON", async: false, success: function (response) {
-                            console.log('resopnse: ' + JSON.stringify(response));
-
-
-                            if (response.Status == 'Success') {
-                               
-                                self.reset();
-                                self.selectedMessages.push(["confirmation"]);
-                                var isSelectedMessageShown = self.docConfirmMessages().find(function (item) {
-                                    return item.severity === self.selectedMessages()
+                             $.ajax({
+                                    type: "POST", url: self.serviceURL + 'documents/exportDocuments', data: JSON.stringify(searchCriteriaData), contentType: "application/json", dataType: "JSON", async: false, success: function (response) {
+                                        console.log('resopnse: ' + JSON.stringify(response));
+            
+            
+                                        if (response.Status == 'Success') {
+                                           
+                                            self.reset();
+                                            self.selectedMessages.push(["confirmation"]);
+                                            var isSelectedMessageShown = self.docConfirmMessages().find(function (item) {
+                                                return item.severity === self.selectedMessages()
+                                            });
+                                            if (!isSelectedMessageShown && self.docConfirmMessages().length == 0) {
+                                                self.docConfirmMessages.push(self.createMessage(response['Error Message'], self.selectedMessages()[0]));
+                                            }
+                                        } else {
+                                            self.selectedMessagesE.push(["error"]);
+                                            var isSelectedMessageShownE = self.docErrorMessages().find(function (item) {
+                                                return item.severity === self.selectedMessagesE()
+                                            });
+                                            if (!isSelectedMessageShownE && self.docErrorMessages().length == 0) {
+                                                self.docErrorMessages.push(self.createMessage(response['Error Message'], self.selectedMessagesE()[0]));
+                                            }
+                                        }
+            
+                                    },
+                                    complete: function (data) {
+                                        console.log('POST complete');
+            
+                                    },
+                                    error: function (xhr, textStatus, errorThrown) {
+                                        console.log("Error in post call");
+                                        console.log(xhr.responseText);
+                                    }
                                 });
-                                if (!isSelectedMessageShown && self.docConfirmMessages().length == 0) {
-                                    self.docConfirmMessages.push(self.createMessage(response['Error Message'], self.selectedMessages()[0]));
-                                }
-                            } else {
-                                self.selectedMessagesE.push(["error"]);
-                                var isSelectedMessageShownE = self.docErrorMessages().find(function (item) {
-                                    return item.severity === self.selectedMessagesE()
-                                });
-                                if (!isSelectedMessageShownE && self.docErrorMessages().length == 0) {
-                                    self.docErrorMessages.push(self.createMessage(response['Error Message'], self.selectedMessagesE()[0]));
-                                }
-                            }
-
-                        },
-                        complete: function (data) {
-                            console.log('POST complete');
-
-                        },
-                        error: function (xhr, textStatus, errorThrown) {
-                            console.log("Error in post call");
-                            console.log(xhr.responseText);
-                        }
-                    });
+                      }
 
                 }.bind(this)
                

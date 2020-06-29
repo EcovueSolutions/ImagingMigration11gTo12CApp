@@ -100,7 +100,7 @@ define(['knockout','default','configs', 'ojs/ojmodule-element-utils', 'ojs/ojkno
        
       self.logout = function() {
 				//  window.location.href='logout.jsp';
-				configs.contextUrl+'logout';
+				window.location.href=configs.contextUrl+'logout';
 			};
                         
      // Header

@@ -84,6 +84,7 @@ public class ImagingRestServices {
             ResultSet rs = null;
 
             try {
+                logger.info("Executing configs table from Documents path");
                 rs = p.executeQuery();
                
                 while(rs.next()){  
@@ -107,7 +108,7 @@ public class ImagingRestServices {
                 rs.close();
             } catch (SQLException e) {
                 
-                
+                logger.info("Error while executing configs table from Documents path: "+e.getMessage());
             } finally {
                 
                 ebsconn.close();
@@ -208,10 +209,7 @@ public class ImagingRestServices {
           @Path("/exportDocuments")
            @Consumes("text/plain")
             public Response getDocument(String getDocPayload) throws Exception {
-//                String current = new java.io.File( "." ).getCanonicalPath();
-//                       System.out.println("Current dir:"+current);
-//                String currentDir = System.getProperty("user.dir");
-//                       System.out.println("Current dir using System:" +currentDir);
+                logger.info("Start Exporting Documents");
                String username   = "";
                String password   = "";
                String imagingUrl = "";
@@ -230,6 +228,7 @@ public class ImagingRestServices {
                  password   = config.password;
                  imagingUrl = config.imagingUrl;
                  migrationPath = config.migrationPath;
+            logger.info("Migration Path: "+migrationPath);
                //  migrationPath = "C:\\ecovue-dashboard\\Imaging files";
             
 //            imagingUrl = "http://wcctimg2.mountaire.net:16000";
@@ -417,6 +416,7 @@ public class ImagingRestServices {
                                            
                                              
                                        }catch(Exception e){
+                                                   logger.info("Error while downloading document: "+e.getMessage());
                                            output.put("Error Message", e.getMessage());
                                                return Response.status(200).entity(output.toString()).header("Access-Control-Allow-Origin",
                                                                                                                "*").header("Access-Control-Allow-Methods",
@@ -486,6 +486,7 @@ public class ImagingRestServices {
                                            logger.info("File written to "+migrationPath);
                                            fw.close();    
                                        }catch(Exception e){
+                                                   logger.info("Error while Column_Vals text file: "+e.getMessage());
                                                 output.put("Error Message", e.getMessage());
                                                return Response.status(200).entity(output.toString()).header("Access-Control-Allow-Origin",
                                                                                                                "*").header("Access-Control-Allow-Methods",
@@ -496,6 +497,7 @@ public class ImagingRestServices {
                                        
                                    }
                                     catch (Exception e) {
+                                        logger.info("searchService error: "+e.getMessage());
                                         output.put("Status", "Failed");
                                         output.put("Error Message", e.getMessage());
                                         return Response.status(200).entity(output.toString()).header("Access-Control-Allow-Origin",
@@ -509,6 +511,7 @@ public class ImagingRestServices {
                                    }
                                 }
                                 catch (ImagingException e) {
+                                    logger.info("Main error: "+e.getMessage());
                                     output.put("Status", "Failed");
                                     output.put("Error Message", e.getMessage());
                                     return Response.status(200).entity(output.toString()).header("Access-Control-Allow-Origin",
@@ -523,7 +526,7 @@ public class ImagingRestServices {
                             
                             
                         }
-                       
+                        logger.info("End Export Documents");
                         output.put("Status", "Success");
                         output.put("Error Message", String.valueOf(noOfDocs)+" Documents' successfully moved to "+migrationPath);
                    

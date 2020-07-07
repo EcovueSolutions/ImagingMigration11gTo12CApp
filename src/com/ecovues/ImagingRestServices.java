@@ -230,7 +230,7 @@ public class ImagingRestServices {
                  password   = config.password;
                  imagingUrl = config.imagingUrl;
                  migrationPath = config.migrationPath;
-             //    migrationPath = "C:\\ecovue-dashboard\\Imaging files";
+               //  migrationPath = "C:\\ecovue-dashboard\\Imaging files";
             
 //            imagingUrl = "http://wcctimg2.mountaire.net:16000";
 //            username="weblogic";

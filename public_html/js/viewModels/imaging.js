@@ -21,7 +21,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'hammerjs', 'ojs/ojpagingdataprovide
                 self.fromDate = ko.observable();
                 self.toDate = ko.observable();
                 
-                 self.buttonValue = ko.observable("off");
+                 self.buttonValue = ko.observable(false);
                 
                 this.comboBoxValue = ko.observable("dd-MMM-yyyy");
                 
@@ -51,7 +51,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'hammerjs', 'ojs/ojpagingdataprovide
 
               
                 self.submit = function () {
-                 self.buttonValue("on");
+                 self.buttonValue(true);
                 console.log('From Date: '+self.fromDate());
                 console.log('To Date: '+self.toDate());
                 var fromActDate = new Date(self.fromDate()); 
@@ -97,7 +97,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'hammerjs', 'ojs/ojpagingdataprovide
                                       contentType: "text/plain", dataType: "JSON",  success: function (response) {
                                         console.log('resopnse: ' + JSON.stringify(response));
                 
-                                        self.buttonValue("off");
+                                        self.buttonValue(false);
                                         if (response.Status == 'Success') {
                                            
                                             self.reset();

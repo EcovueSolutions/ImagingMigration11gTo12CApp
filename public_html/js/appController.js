@@ -202,12 +202,9 @@ define(['knockout','default','configs', 'ojs/ojmodule-element-utils', 'ojs/ojkno
         this.linkId = id;
         this.linkTarget = linkTarget;
       }
-      self.footerLinks = ko.observableArray([
-        new footerLink('About Oracle', 'aboutOracle', 'http://www.oracle.com/us/corporate/index.html#menu-about'),
-        new footerLink('Contact Us', 'contactUs', 'http://www.oracle.com/us/corporate/contact/index.html'),
-        new footerLink('Legal Notices', 'legalNotices', 'http://www.oracle.com/us/legal/index.html'),
-        new footerLink('Terms Of Use', 'termsOfUse', 'http://www.oracle.com/us/legal/terms/index.html'),
-        new footerLink('Your Privacy Rights', 'yourPrivacyRights', 'http://www.oracle.com/us/legal/privacy/index.html')
+            self.footerLinks = ko.observableArray([
+       new footerLink("About Ecovues", 'aboutEcovues', 'http://ecovues.com/company.html'),
+	new footerLink("Contact US", 'contactUs', 'http://ecovues.com/contact.html')
       ]);
      }
 

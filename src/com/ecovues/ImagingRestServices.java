@@ -61,8 +61,11 @@ public class ImagingRestServices {
     
     @GET
     @Path("/validate")
-    public String getName() {
-        return "Rest service working fine";
+    public Response getName() {
+   //     return "Rest service working fine";
+        return Response.status(200).entity("Rest service working fine").header("Access-Control-Allow-Origin",
+                                                                        "*").header("Access-Control-Allow-Methods",
+                                                                                    "GET, POST, DELETE, PUT").build();
     }
     
         public ConfigData configs() throws Exception {
@@ -203,7 +206,7 @@ public class ImagingRestServices {
     
     @POST
           @Path("/exportDocuments")
-           @Consumes("application/json")
+           @Consumes("text/plain")
             public Response getDocument(String getDocPayload) throws Exception {
 //                String current = new java.io.File( "." ).getCanonicalPath();
 //                       System.out.println("Current dir:"+current);
@@ -227,7 +230,7 @@ public class ImagingRestServices {
                  password   = config.password;
                  imagingUrl = config.imagingUrl;
                  migrationPath = config.migrationPath;
-                // migrationPath = "C:\\ecovue-dashboard\\Imaging files";
+             //    migrationPath = "C:\\ecovue-dashboard\\Imaging files";
             
 //            imagingUrl = "http://wcctimg2.mountaire.net:16000";
 //            username="weblogic";
@@ -445,7 +448,11 @@ public class ImagingRestServices {
                                                       
                                                                             for (TypedValue typedValue: row.getColumnValues()) {
                                                                                 
+                                                                            //    typedValue.getType()
+                                                                                
+                                                                                
                                                                                 logger.info("Attribute value: "+typedValue.getValue());
+                                                                                logger.info("Attribute type: "+typedValue.getType());
                                                                                 
                                                                                // System.out.println(typedValue.getStringValue());
                                                                                 
@@ -453,7 +460,7 @@ public class ImagingRestServices {
                                                                                 
                                                                                 logger.info("Length value: "+sDate1.length());
                                                                                 
-                                                                                if(sDate1.contains("-")&&!sDate1.contains(":")&&sDate1.length()<20) {
+                                                                                if(typedValue.getType().equals("DATE")) {
                                                                                     
                                                                                     //String sDate1=typedValue.getStringValue();
                                                                                     Date date1=new SimpleDateFormat("yyyy-mm-dd").parse(sDate1);

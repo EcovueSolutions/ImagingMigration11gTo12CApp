@@ -10,7 +10,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'hammerjs', 'ojs/ojpagingdataprovide
     'ojs/ojknockouttemplateutils', 'exportCSV',  'jsonFormatter', 'ojs/ojknockout-keyset','ojs/ojconverterutils-i18n',
     'ojs/ojconverter-datetime', 'ojs/ojbutton', 'promise', 'ojs/ojnavigationlist', 'ojs/ojarraytabledatasource',
     'ojs/ojtable', 'ojs/ojinputtext', 'ojs/ojinputnumber', 'ojs/ojdatetimepicker', 'hammerjs', 'ojs/ojjquery-hammer', 'ojs/ojknockout', 'ojs/ojoffcanvas', 'ojs/ojbutton',
-    'ojs/ojformlayout', 'ojs/ojmessages', 'ojs/ojarraytabledatasource', 'ojs/ojcheckboxset', 'ojs/ojpagingtabledatasource', 'ojs/ojselectcombobox', 'ojs/ojvalidation-base', 'ojs/ojtable',
+    'ojs/ojformlayout', 'ojs/ojmessages', 'ojs/ojarraytabledatasource', 'ojs/ojcheckboxset', , 'ojs/ojprogress','ojs/ojpagingtabledatasource', 'ojs/ojselectcombobox', 'ojs/ojvalidation-base', 'ojs/ojtable',
     'ojs/ojpagingcontrol', 'ojs/ojfilepicker', 'ojs/ojdialog', 'ojs/ojprogress'],
         function (oj, ko, $, Hammer, PagingDataProviderView, ArrayDataProvider, configs, defaults, KnockoutTemplateUtils, exportCSV,  jf, keySet, ConverterUtilsI18n, DateTimeConverter) {
 
@@ -20,6 +20,8 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'hammerjs', 'ojs/ojpagingdataprovide
                 
                 self.fromDate = ko.observable();
                 self.toDate = ko.observable();
+                
+                 self.buttonValue = ko.observable("off");
                 
                 this.comboBoxValue = ko.observable("dd-MMM-yyyy");
                 
@@ -49,6 +51,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'hammerjs', 'ojs/ojpagingdataprovide
 
               
                 self.submit = function () {
+                 self.buttonValue("on");
                 console.log('From Date: '+self.fromDate());
                 console.log('To Date: '+self.toDate());
                 var fromActDate = new Date(self.fromDate()); 
@@ -80,11 +83,21 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'hammerjs', 'ojs/ojpagingdataprovide
                         searchCriteriaData.parameters=[{"param_name":"Document Creation Date","param_value":self.fromDate()},{"param_name":"Document Creation Date 1","param_value":self.toDate()}];
                         
                         console.log('Post Url: '+self.serviceURL + 'documents/exportDocuments');
-                             $.ajax({
-                                    type: "POST", url: self.serviceURL + 'documents/exportDocuments', data: JSON.stringify(searchCriteriaData), contentType: "application/json", dataType: "JSON", async: false, success: function (response) {
+                        
+                        invokeAPI(searchCriteriaData);
+                       
+                           
+                      }
+
+                }.bind(this)
+               
+               function invokeAPI(searchCriteriaData){
+                     $.ajax({
+                                    type: "POST", url: self.serviceURL + 'documents/exportDocuments', data: JSON.stringify(searchCriteriaData), 
+                                      contentType: "text/plain", dataType: "JSON",  success: function (response) {
                                         console.log('resopnse: ' + JSON.stringify(response));
-            
-            
+                
+                                        self.buttonValue("off");
                                         if (response.Status == 'Success') {
                                            
                                             self.reset();
@@ -115,10 +128,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'hammerjs', 'ojs/ojpagingdataprovide
                                         console.log(xhr.responseText);
                                     }
                                 });
-                      }
-
-                }.bind(this)
-               
+               }
                    
                 
 

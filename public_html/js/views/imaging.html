@@ -9,6 +9,12 @@
     <h4 class="head">Search: Invoice By Date</h4>
 </div>
 </br>
+<oj-bind-if test="[[buttonValue() === 'on']]">
+<div class="oj-sm-margin-1x-bottom">Downloading Documents</div>
+            <oj-progress value="-1"></oj-progress>
+            </br>
+</oj-bind-if>
+            
         <oj-form-layout id="myform" label-edge="start" max-columns="1">
             <oj-input-date id="Date" value="{{fromDate}}" converter="[[dateConverter]]"
                            label-hint="From Document Creation Date"></oj-input-date>

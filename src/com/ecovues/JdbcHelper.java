@@ -62,7 +62,7 @@ public class JdbcHelper {
         javax.naming.Context ctx;
         try {
             ctx = new InitialContext();
-            DataSource ds = (DataSource) ctx.lookup("jdbc/ECOIMG");
+            DataSource ds = (DataSource) ctx.lookup("jdbc/ECOUIDS");
             conn = ds.getConnection();
         } catch (NamingException e) {
         	System.out.println("getJDBCConnectionFromDataSource: NamingException while creating DB connection: " + e);

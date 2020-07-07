@@ -25,7 +25,8 @@
              <servlet-name>CheckForValidSession</servlet-name>
              <url-pattern>/checkforvalidsession</url-pattern>
         </servlet-mapping>
-
+    
+   
    <security-constraint>
                 <web-resource-collection>
                       <web-resource-name>Success</web-resource-name>

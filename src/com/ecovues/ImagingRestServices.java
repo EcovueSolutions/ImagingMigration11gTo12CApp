@@ -229,7 +229,7 @@ public class ImagingRestServices {
                  imagingUrl = config.imagingUrl;
                  migrationPath = config.migrationPath;
             logger.info("Migration Path: "+migrationPath);
-               //  migrationPath = "C:\\ecovue-dashboard\\Imaging files";
+              //   migrationPath = "C:\\ecovue-dashboard\\Imaging files";
             
 //            imagingUrl = "http://wcctimg2.mountaire.net:16000";
 //            username="weblogic";
@@ -452,16 +452,19 @@ public class ImagingRestServices {
                                                                                 
                                                                                 
                                                                                 logger.info("Attribute value: "+typedValue.getValue());
-                                                                                logger.info("Attribute type: "+typedValue.getType());
+                                                                                
                                                                                 
                                                                                // System.out.println(typedValue.getStringValue());
                                                                                 
                                                                                 String sDate1=typedValue.getStringValue();
                                                                                 
                                                                                 logger.info("Length value: "+sDate1.length());
+                                                                                String type = typedValue.getType().toString();
                                                                                 
-                                                                                if(typedValue.getType().equals("DATE")) {
-                                                                                    
+                                                                                logger.info("Attribute type: "+type);
+                                                                                
+                                                                                if(type.equals("DATE")) {
+                                                                                    logger.info("sDate1 value: "+sDate1);
                                                                                     //String sDate1=typedValue.getStringValue();
                                                                                     Date date1=new SimpleDateFormat("yyyy-mm-dd").parse(sDate1);
                                                                                     SimpleDateFormat formatter = new SimpleDateFormat("mm/dd/yyyy");

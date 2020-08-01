@@ -445,13 +445,15 @@ public class ImagingRestServices {
                                                      
                                                                             fw.write(migrationPath+"/"+documentId+"."+fileType+"|"); 
                                                       
-                                                      
+                                                                            int position=0;
                                                                             for (TypedValue typedValue: row.getColumnValues()) {
                                                                                 
                                                                             //    typedValue.getType()
+                                                                            //    Logger.info("position: "+position);
                                                                                 
                                                                                 
-                                                                                logger.info("Attribute value: "+typedValue.getValue());
+                                                                                logger.info("Attribute value: "+typedValue.getValue()+" : "+position);
+                                                                                
                                                                                 
                                                                                 
                                                                                // System.out.println(typedValue.getStringValue());
@@ -477,10 +479,12 @@ public class ImagingRestServices {
                                                                                 else if(!sDate1.contains(":"))
                                                                                 {
                                                                                     logger.info("sDate1: "+sDate1);
-                                                                                    if(sDate1.equals("OFR"))
+                                                                                        if(position == 3)
                                                                                         sDate1 = "OFR_11g";
                                                                                 fw.write(sDate1 + "|");    
                                                                                 }
+                                                                                
+                                                                                position++;
                                                                             }
                                                       fw.write("\n");
                                        
